@@ -1,0 +1,38 @@
+server:
+  port: 9002
+spring:
+  cloud:
+    stream:
+      binders:
+        rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                addresses: 182.92.232.148
+                port: 5672
+                username: guest
+                password: guest
+
+      bindings:
+        myOutput:
+          destination: login-user
+        output-step-2:
+          destination: login-user-step-2
+
+        myInput-1: # 通道名，对应代码中的消费监听组
+          destination: login-user # exchange
+          group: logined-member   # 消费者组, 同组负载消费，不同组共同消费；destination.group 组合为queue名
+        myInput-2:
+          destination: login-user
+          group: user
+
+        input-step-1:
+          destination: login-user
+          group: logined-member-step
+        input-step-2:
+          destination: login-user-step-2
+          group: logined-member-step
+
+
+

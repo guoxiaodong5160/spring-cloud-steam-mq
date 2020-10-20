@@ -1,0 +1,28 @@
+server:
+  port: 9001
+spring:
+  cloud:
+    stream:
+      binders:
+        kafka:
+          type: kafka
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: 182.92.232.148:9092
+                      zkNodes: 182.92.232.148:2181
+
+      bindings:
+        myOutput:
+          destination: login-user
+          content-type: application/json
+
+        myInput: # 通道名，对应代码中的消费监听组
+          destination: login-user # exchange
+          group: logined-member   # 消费者组, 同组负载消费
+
+
+
